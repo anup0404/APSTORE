@@ -34,7 +34,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "px-5 py-3 text-lg",
     };
 
-    const baseClasses = "gap-2 rounded-lg transition-all";
+    const baseClasses = " font-heading gap-2 rounded-lg transition-all";
 
     const finalClassName = [
       baseClasses,

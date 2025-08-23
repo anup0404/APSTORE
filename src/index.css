@@ -1,1 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap');
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700;800;900&display=swap");
+
 @import "tailwindcss";
+/* 
+
+.font-heading {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.font-secondary{
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+
+}
+
+.font-body {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+}
+
+
+
+
+ */
+
+
+
+
+
+/* Font families for your project */
+body, .font-serif {
+  font-family: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+}
+
+/* Luxury Fade-in animation */
+@keyframes luxuryFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.luxury-fade-in {
+  animation: luxuryFadeIn 1.2s ease-out forwards;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Video card min height for mobile */
+@media (max-width: 640px) {
+  .video-card {
+    min-height: 50vh;
+  }
+  .mobile-text-shadow {
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+  }
+}
+
+/* Tablet spacing */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-spacing {
+    padding: 1.5rem;
+  }
+}
+
+/* Overlay gradient for text */
+.text-overlay-dark {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0.6) 40%,
+    rgba(0,0,0,0.3) 70%,
+    rgba(0,0,0,0.1) 100%
+  );
+}
+

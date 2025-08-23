@@ -22,3 +22,20 @@ export const validateMobile = (mobile: string): string | undefined => {
   if (!mobileRegex.test(mobile)) return "Enter a valid 10-digit mobile number";
   return undefined;
 };
+
+// Validator functions
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email) return "Email is required";
+  if (!emailRegex.test(email)) return "Please enter a valid email";
+  return null;
+};
+
+const validateMobile = (mobile, countryCode) => {
+  const cleanMobile = mobile.replace(/\D/g, "");
+  if (!mobile) return "Mobile number is required";
+  if (!countryCode) return "Please select a country code";
+  if (cleanMobile.length < 7) return "Please enter a valid mobile number";
+  if (cleanMobile.length > 15) return "Mobile number is too long";
+  return null;
+};

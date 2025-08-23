@@ -34,10 +34,10 @@ export const AuthImage = React.forwardRef<HTMLDivElement, AuthImageProps>(
 
           {/* Optional content overlay */}
           <div className="relative z-10 text-center text-white p-8">
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="font-heading text-3xl font-bold mb-4">
               Join Our Fashion Community
             </h2>
-            <p className="text-lg opacity-90">
+            <p className="font-secondary text-lg opacity-90">
               Discover the latest trends and connect with fashion enthusiasts
               worldwide
             </p>

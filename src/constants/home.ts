@@ -1,46 +1,61 @@
-// Categories data
-export const categories = [
+import type { Category } from "../Components/ui/CategoryGrid/CategoryGrid.type";
+
+export const mockCategories: Category[] = [
   {
     id: 1,
-    name: "Shirts",
+    name: "Autumn-Winter 2025-2026 Collection",
     image:
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "150+ Items",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=800&fit=crop&crop=center",
+    count: "New Arrivals",
   },
   {
     id: 2,
-    name: "T-Shirts",
+    name: "Dior Toujours Bag",
     image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "200+ Items",
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&h=800&fit=crop&crop=center",
+    count: "Limited Edition",
   },
   {
     id: 3,
-    name: "Jeans",
+    name: "Dior Lucky",
     image:
-      "https://images.unsplash.com/photo-1542272454315-7ad85f62b8a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "80+ Items",
+      "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=800&fit=crop&crop=center",
+    count: "Exclusive",
   },
   {
     id: 4,
-    name: "Jackets",
+    name: "Sunglasses",
     image:
-      "https://images.unsplash.com/photo-1544022613-e87ca75a784a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "60+ Items",
+      "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=800&fit=crop&crop=center",
+    count: "Summer Collection",
   },
   {
     id: 5,
-    name: "Accessories",
+    name: "Fragrances",
     image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "100+ Items",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=600&h=800&fit=crop&crop=center",
+    count: "Best Sellers",
   },
   {
     id: 6,
-    name: "Footwear",
+    name: "Fine Jewelry",
     image:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-    count: "75+ Items",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=800&fit=crop&crop=center",
+    count: "Haute Couture",
+  },
+  {
+    id: 7,
+    name: "Men's Collection",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=center",
+    count: "Formal Wear",
+  },
+  {
+    id: 8,
+    name: "Beauty Essentials",
+    image:
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=800&fit=crop&crop=center",
+    count: "Makeup & Skincare",
   },
 ];
 
@@ -113,12 +128,11 @@ export const products = [
     badge: "COMFORT",
   },
 ];
-
 export const banners = [
   {
     id: 1,
     image:
-      "https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+      "https://t3.ftcdn.net/jpg/03/20/68/66/240_F_320686681_Ur6vdYQgDC9WiijiVfxlRyQffxOgfeFz.jpg",
     title: "SUMMER SALE",
     subtitle: "Up to 50% OFF",
     description: "Refresh your wardrobe with our latest collection",
@@ -142,4 +156,26 @@ export const banners = [
     description: "Elevate your style with our premium range",
     buttonText: "Shop Premium",
   },
+];
+
+// List of countries with flags and dial codes
+export const countryCodes = [
+  { code: "+91", country: "IN", flag: "🇮🇳", name: "India" },
+  { code: "+1", country: "US", flag: "🇺🇸", name: "United States" },
+  { code: "+44", country: "GB", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+33", country: "FR", flag: "🇫🇷", name: "France" },
+  { code: "+49", country: "DE", flag: "🇩🇪", name: "Germany" },
+  { code: "+39", country: "IT", flag: "🇮🇹", name: "Italy" },
+  { code: "+34", country: "ES", flag: "🇪🇸", name: "Spain" },
+  { code: "+86", country: "CN", flag: "🇨🇳", name: "China" },
+  { code: "+81", country: "JP", flag: "🇯🇵", name: "Japan" },
+  { code: "+82", country: "KR", flag: "🇰🇷", name: "South Korea" },
+  { code: "+61", country: "AU", flag: "🇦🇺", name: "Australia" },
+  { code: "+65", country: "SG", flag: "🇸🇬", name: "Singapore" },
+  { code: "+60", country: "MY", flag: "🇲🇾", name: "Malaysia" },
+  { code: "+66", country: "TH", flag: "🇹🇭", name: "Thailand" },
+  { code: "+84", country: "VN", flag: "🇻🇳", name: "Vietnam" },
+  { code: "+971", country: "AE", flag: "🇦🇪", name: "UAE" },
+  { code: "+966", country: "SA", flag: "🇸🇦", name: "Saudi Arabia" },
+  // Add more as needed
 ];

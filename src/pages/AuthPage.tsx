@@ -24,7 +24,7 @@ const AuthPage: React.FC = () => {
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left side - only visible on large screens */}
       <div className="hidden lg:block lg:w-1/2 ">
-        <AuthImage alt="Login Background object-cover" />
+        <AuthImage alt="logo" />
       </div>
 
       {/* Right side */}
@@ -35,10 +35,10 @@ const AuthPage: React.FC = () => {
             <div className="bg-black w-12 h-12 inline-flex items-center justify-center rounded-lg mb-4 mx-auto">
               <span className="text-white font-bold text-lg">AP</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            <h1 className="font-heading text-2xl font-bold text-gray-900 mb-1">
               Welcome Back!
             </h1>
-            <p className="text-gray-600 text-sm">
+            <p className="font-body text-gray-600 text-sm">
               Login or Register to your fashion account
             </p>
           </div>

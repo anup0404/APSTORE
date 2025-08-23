@@ -4,7 +4,3 @@ export interface Category {
   image: string;
   count: string;
 }
-
-export interface CategoryGridProps {
-  categories: Category[];
-}
