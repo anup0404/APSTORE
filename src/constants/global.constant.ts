@@ -1,8 +1,11 @@
-export const LOGO_NAME = "Dior";
+export const LOGO_NAME = "GENDORI";
 export const HOME_CATEGORY_HEADING = "Discover Our Collections";
 export const HOME_PRODUCT_CARD_FEATURED_HEADING = "Curated Collection";
 export const HOME_PRODUCT_CARD_FEATURED_SUBHEADING =
   "Discover our handpicked selection of luxury fashion pieces, crafted with exceptional attention to detail";
+
+export const SCROLL_THRESHOLD = 200;
+export const THROTTLE_DELAY = 300;
 
 export const TABS = [
   "Description",

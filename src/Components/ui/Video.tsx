@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
-import type { VideoData } from "./video.type";
-import ShopButton from "../ShopButton";
+import type { VideoData } from "./video/video.type";
+import ShopButton from "./ShopButton";
 import { Link } from "react-router-dom";
 
 interface VideoCardProps {

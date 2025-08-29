@@ -1,12 +1,13 @@
 import { forwardRef, useState } from "react";
-import type { VideoData } from "./video/video.type";
-import VideoCard from "./video/Video";
+
+import VideoCard from "./Video";
 import CentralLogo from "./CentralLogo";
 import { LOGO_NAME } from "../../constants/global.constant";
+import type { HomeVideo } from "../../types/home.type";
 
 interface HeroSectionProps {
   className?: string;
-  videos: VideoData[];
+  videos: HomeVideo[];
 }
 
 const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>(
@@ -33,16 +34,17 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>(
       >
         {/* Mobile: Stack vertically, Desktop: Side by side */}
         <div className="flex flex-col sm:flex-row h-full">
-          {videos.map((video) => (
-            <VideoCard
-              key={video.id}
-              data={video}
-              isHovered={hoveredVideoId === video.id}
-              isActive={activeVideoId === video.id}
-              onMouseEnter={() => handleVideoHover(video.id)}
-              onMouseLeave={handleVideoLeave}
-            />
-          ))}
+          {videos.length > 0 &&
+            videos.map((video) => (
+              <VideoCard
+                key={video.id}
+                data={video}
+                isHovered={hoveredVideoId === video.id}
+                isActive={activeVideoId === video.id}
+                onMouseEnter={() => handleVideoHover(video.id)}
+                onMouseLeave={handleVideoLeave}
+              />
+            ))}
         </div>
 
         {/* Central DIOR Logo - Gets lighter when any video is playing */}

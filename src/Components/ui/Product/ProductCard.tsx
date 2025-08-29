@@ -8,23 +8,10 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import type { HomeProduct } from "../../../types/home.type";
 
 export interface ProductCardProps {
-  product: {
-    id: string;
-    title: string;
-    image?: string;
-    images?: string[];
-    price: string;
-    oldPrice?: string;
-    rating: number;
-    isNew?: boolean;
-    isOnSale?: boolean;
-    description?: string;
-    category?: string;
-    brand?: string;
-    availability?: "in-stock" | "out-of-stock" | "low-stock";
-  };
+  product: HomeProduct;
   onWishlistToggle?: (id: string) => void;
   onShare?: (id: string) => void;
   onAddToCart?: (id: string) => void;
@@ -57,11 +44,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [autoRotate, setAutoRotate] = useState(true);
 
   // Use product.images if available, otherwise fallback to single image
-  const images =
-    product.images && product.images.length > 0
-      ? product.images
-      : product.image
-      ? [product.image]
+  const variantImages =
+    product.variant_images && product.variant_images.length > 0
+      ? product.variant_images
+      : product.primary_image
+      ? [product.primary_image]
       : [];
 
   // Manual navigation handlers
@@ -71,13 +58,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       e.stopPropagation();
       setAutoRotate(false); // Stop auto-rotation when manually navigating
       setCurrentImageIndex(
-        (prev) => (prev - 1 + images.length) % images.length
+        (prev) => (prev - 1 + variantImages.length) % variantImages.length
       );
 
       // Resume auto-rotation after a delay
       setTimeout(() => setAutoRotate(true), 3000);
     },
-    [images.length]
+    [variantImages.length]
   );
 
   const handleNextImage = useCallback(
@@ -85,23 +72,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
       e.preventDefault();
       e.stopPropagation();
       setAutoRotate(false); // Stop auto-rotation when manually navigating
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % variantImages.length);
 
       // Resume auto-rotation after a delay
       setTimeout(() => setAutoRotate(true), 3000);
     },
-    [images.length]
+    [variantImages.length]
   );
 
   // Auto-rotate images on hover (only if autoRotate is true)
   useEffect(() => {
-    if (isHovered && images.length > 1 && autoRotate) {
+    if (isHovered && variantImages.length > 1 && autoRotate) {
       const interval = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        setCurrentImageIndex((prev) => (prev + 1) % variantImages.length);
       }, 2500);
       return () => clearInterval(interval);
     }
-  }, [isHovered, images.length, autoRotate]);
+  }, [isHovered, variantImages.length, autoRotate]);
 
   // Reset image index when leaving hover
   useEffect(() => {
@@ -123,30 +110,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Badge */}
-      {(product.isNew || product.isOnSale) && (
+      {product.badge && (
         <div className="absolute left-4 top-4 z-10">
-          <span
-            className={`px-3 py-1 text-xs font-medium tracking-wider uppercase ${
-              product.isNew ? "bg-white text-black" : "bg-black text-white"
-            }`}
-          >
-            {product.isNew ? "New" : "Sale"}
-          </span>
+          {Object.entries(product.badge).map(([key, value]) =>
+            value ? (
+              <span
+                key={key}
+                className={`px-3 py-1 mr-2 text-xs font-medium tracking-wider uppercase ${
+                  key === "isNew"
+                    ? "bg-white text-black"
+                    : "bg-black text-white"
+                }`}
+              >
+                {typeof value === "string" ? value : key.replace("is", "")}
+              </span>
+            ) : null
+          )}
         </div>
       )}
 
       {/* Image Container */}
       <div className="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden">
-        {images.length > 0 ? (
+        {variantImages.length > 0 ? (
           <>
             <img
-              src={images[currentImageIndex]}
-              alt={product.title}
+              src={variantImages[currentImageIndex]}
+              alt={product.name}
               className="object-cover w-full h-full transition-all duration-500 ease-in-out"
             />
 
             {/* Image Navigation - Only show on hover if multiple images */}
-            {images.length > 1 && (
+            {variantImages.length > 1 && (
               <>
                 <button
                   className={`absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full shadow-lg transition-all duration-300 hover:bg-white z-30 ${
@@ -173,7 +167,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     isHovered ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  {images.map((_, index) => (
+                  {variantImages.map((_, index) => (
                     <div
                       key={index}
                       className={`w-1.5 h-1.5 rounded-full transition-colors ${
@@ -237,7 +231,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           }`}
         >
           <h3 className="text-white text-lg font-light mb-2 line-clamp-1">
-            {product.title}
+            {product.name}
           </h3>
           {product.description && (
             <p className="text-white/90 text-sm font-light line-clamp-2 mb-3">
@@ -261,7 +255,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       >
         <div className="text-center">
           <h3 className="text-gray-900 text-base font-light mb-2 line-clamp-2 min-h-[2.5rem]">
-            {product.title}
+            {product.name}
           </h3>
 
           <div className="flex items-center justify-center mb-3">
@@ -272,9 +266,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-gray-900 text-lg font-light">
               {product.price}
             </span>
-            {product.oldPrice && (
+            {product.originalPrice && (
               <span className="text-gray-500 text-sm line-through font-light">
-                {product.oldPrice}
+                {product.originalPrice}
               </span>
             )}
           </div>

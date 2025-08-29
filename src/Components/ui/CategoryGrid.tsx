@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Category } from "./CategoryGrid.type";
-import { HOME_CATEGORY_HEADING } from "../../../constants/global.constant";
+
 import { Link } from "react-router-dom";
+import { HOME_CATEGORY_HEADING } from "../../constants/global.constant";
+import type { HomeCategory } from "../../types/home.type";
 
 interface CategoryGridProps {
-  categories: Category[];
+  categories: HomeCategory[];
 }
 
 const CategoryGrid = React.forwardRef<HTMLElement, CategoryGridProps>(
@@ -119,7 +120,7 @@ const CategoryGrid = React.forwardRef<HTMLElement, CategoryGridProps>(
                                 : "bg-black/20 text-white/90 border border-white/20"
                             }`}
                           >
-                            {category.count}
+                            {category.count}+ Products
                           </span>
                         </div>
 

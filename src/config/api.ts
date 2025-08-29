@@ -19,7 +19,14 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/users/${id}`,
     UPLOAD_AVATAR: (id: string) => `/users/${id}/avatar`,
   },
+
+  HOME: {
+    VIDEOS: "/home/hero-section/videos",
+    CATEGORIES: "/home/categories",
+    FEATURED_PRODUCTS: "/home/products/featured",
+  },
 };
+
 //   // Products
 //   PRODUCTS: {
 //     LIST: '/products',

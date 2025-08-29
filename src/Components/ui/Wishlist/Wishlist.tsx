@@ -137,9 +137,9 @@ const Wishlist = forwardRef<HTMLDivElement, WishlistProps>((props, ref) => {
     }
   }, [wishlistItems, selectedCategory, sortBy]);
 
-  const handleRemoveItem = useCallback((id: string) => {
-    setWishlistItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+  // const handleRemoveItem = useCallback((id: string) => {
+  //   setWishlistItems((prev) => prev.filter((item) => item.id !== id));
+  // }, []);
 
   const handleAddToBag = useCallback(
     (id: string) => {

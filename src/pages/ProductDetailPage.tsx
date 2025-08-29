@@ -2,7 +2,8 @@ import { forwardRef, type ForwardedRef } from "react";
 import { useParams } from "react-router-dom";
 import ProductDetails from "../Components/ui/ProductDetail/ProductDetail";
 import FeaturedItems from "../Components/ui/FeaturedItems";
-import { dummyProductCards } from "../constants/product";
+
+import { dummyHomeProducts } from "../data/home";
 
 const ProductDetailsPage = forwardRef<HTMLDivElement>(
   (_props, ref: ForwardedRef<HTMLDivElement>) => {
@@ -17,7 +18,7 @@ const ProductDetailsPage = forwardRef<HTMLDivElement>(
 
         <FeaturedItems
           heading="Similar Products"
-          products={dummyProductCards}
+          products={dummyHomeProducts}
           onWishlistToggle={(idx: number | string) =>
             console.log("Wishlist toggled:", idx)
           }

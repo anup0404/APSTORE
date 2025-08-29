@@ -1,10 +1,11 @@
 import React from "react";
-import ProductCard, { type ProductCardProps } from "./Product/ProductCard";
+import ProductCard from "./Product/ProductCard";
+import type { HomeProduct } from "../../types/home.type";
 
 export interface FeaturedItemsProps {
   heading?: string;
   subheading?: string;
-  products: ProductCardProps[];
+  products: HomeProduct[];
   onAddToCart?: (id: string) => void;
   onAddToBag?: (id: string) => void;
   onWishlistToggle?: (id: string) => void;
@@ -30,8 +31,8 @@ const FeaturedItems = React.forwardRef<HTMLDivElement, FeaturedItemsProps>(
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-12 sm:mt-16 lg:mt-20">
             {products.map((item) => (
               <ProductCard
-                key={item.product.id}
-                product={item.product}
+                key={item.id}
+                product={item}
                 onWishlistToggle={onWishlistToggle}
                 onShare={onShare}
               />

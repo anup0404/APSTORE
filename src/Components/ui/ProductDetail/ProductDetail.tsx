@@ -10,11 +10,12 @@ import {
   ThumbsUp,
   Shield,
 } from "lucide-react";
-import { mockProductDetails } from "../../../constants/product";
+// import { mockProductDetails } from "../../../constants/product";
 import {
   PRODUCT_DETAIL_CONTACT_INFO,
   TABS,
 } from "../../../constants/global.constant";
+import { useGetProductByIdQuery } from "../../../store/api/productApi";
 
 interface ProductDetailsProps {
   productId: string;
@@ -29,8 +30,8 @@ interface ProductDetailsRef {
 }
 
 const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
-  (_, ref) => {
-    const [product] = useState(mockProductDetails);
+  ({ productId }, ref) => {
+    // const [product] = useState(mockProductDetails);
     const [loading] = useState(false);
     const [selectedColor, setSelectedColor] = useState(0);
     const [selectedSize, setSelectedSize] = useState("");
@@ -40,8 +41,10 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
     const [showSizeGuide, setShowSizeGuide] = useState(false);
     const [pincode, setPincode] = useState("");
 
+    const { data: product } = useGetProductByIdQuery(productId);
+
     useEffect(() => {
-      if (product.variants?.[0]) {
+      if (product && product.variants?.[0]) {
         setSelectedSize(product.variants[0].size || "");
       }
     }, [product]);
@@ -54,16 +57,23 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
       }),
     }));
 
-    const uniqueColors = product.variants?.reduce((acc, variant) => {
-      if (variant.color && !acc.some((c) => c.value === variant.color?.value)) {
-        acc.push(variant.color);
-      }
-      return acc;
-    }, [] as Array<{ name: string; value: string }>);
+    const uniqueColors =
+      product && product.variants
+        ? product.variants.reduce((acc, variant) => {
+            if (
+              variant.color &&
+              !acc.some((c) => c.value === variant.color?.value)
+            ) {
+              acc.push(variant.color);
+            }
+            return acc;
+          }, [] as Array<{ name: string; value: string }>)
+        : [];
 
-    const uniqueSizes = [
-      ...new Set(product.variants?.map((v) => v.size).filter(Boolean)),
-    ];
+    const uniqueSizes =
+      product && product.variants
+        ? [...new Set(product.variants.map((v) => v.size).filter(Boolean))]
+        : [];
 
     if (loading) {
       return (
@@ -81,14 +91,14 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
             <div className="lg:hidden bg-gray-50">
               <div className="overflow-x-auto">
                 <div className="flex gap-0">
-                  {product.images?.map((image, index) => (
+                  {product?.images?.map((image, index) => (
                     <div
                       key={image.id}
                       className="flex-shrink-0 w-screen h-96 flex items-center justify-center p-4"
                     >
                       <img
                         src={image.url}
-                        alt={`${product.title} - View ${index + 1}`}
+                        alt={`${product?.title ?? ""} - View ${index + 1}`}
                         className="max-w-full max-h-full object-contain"
                         loading={index === 0 ? "eager" : "lazy"}
                       />
@@ -99,7 +109,7 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
 
               {/* Image indicators for mobile */}
               <div className="flex justify-center gap-2 py-4 bg-gray-50">
-                {product.images?.map((_, index) => (
+                {product?.images?.map((_, index) => (
                   <div
                     key={index}
                     className="w-2 h-2 rounded-full bg-gray-300"
@@ -118,14 +128,14 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                 }}
               >
                 <div className="space-y-0">
-                  {product.images?.map((image, index) => (
+                  {product?.images?.map((image, index) => (
                     <div
                       key={image.id}
                       className="w-full h-screen flex items-center justify-center p-8"
                     >
                       <img
                         src={image.url}
-                        alt={`${product.title} - View ${index + 1}`}
+                        alt={`${product?.title} - View ${index + 1}`}
                         className="max-w-full max-h-full object-contain"
                         loading={index === 0 ? "eager" : "lazy"}
                       />
@@ -153,13 +163,13 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                 {/* Product Header */}
                 <div className="mb-6 lg:mb-8">
                   <h1 className="text-xl lg:text-2xl xl:text-3xl font-light text-gray-900 mb-2 leading-tight">
-                    {product.title}
+                    {product?.title}
                   </h1>
                   <div className="text-sm text-gray-600 mb-4">
-                    {product.description}
+                    {product?.description}
                   </div>
                   <div className="text-xs lg:text-sm text-gray-500 mb-4 lg:mb-6">
-                    Reference: L{product.id}1803NUYA0404
+                    Reference: L{product?.id}1803NUYA0404
                   </div>
                 </div>
 
@@ -167,15 +177,18 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                 <div className="mb-6 lg:mb-8">
                   <div className="flex items-baseline gap-3 lg:gap-4 mb-2">
                     <span className="text-xl lg:text-2xl font-light text-gray-900">
-                      ₹{product.price.toLocaleString()}
+                      ₹
+                      {typeof product?.price === "number"
+                        ? product.price.toLocaleString()
+                        : product?.price}
                     </span>
-                    {product.originalPrice && (
+                    {product?.originalPrice && (
                       <span className="text-base lg:text-lg text-gray-500 line-through">
-                        ₹{product.originalPrice.toLocaleString()}
+                        ₹{product?.originalPrice.toLocaleString()}
                       </span>
                     )}
                   </div>
-                  {product.offers?.discount && (
+                  {product?.offers?.discount && (
                     <span className="text-sm text-green-700 font-medium">
                       {product.offers.discount}% OFF
                     </span>
@@ -240,7 +253,7 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
 
                 {/* Stock Status */}
                 <div className="mb-6 lg:mb-8">
-                  {product.variants?.find((v) => v.size === selectedSize)
+                  {product?.variants?.find((v) => v.size === selectedSize)
                     ?.stock ? (
                     <div className="flex items-center text-sm text-green-700">
                       <Check className="w-4 h-4 mr-2" />
@@ -322,13 +335,13 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                         <div className="pb-5 lg:pb-6 text-sm text-gray-700 leading-relaxed">
                           {tab === "Description" && (
                             <div className="space-y-4">
-                              <p>{product.description}</p>
-                              {product.features && (
+                              <p>{product?.description}</p>
+                              {product?.features && (
                                 <div className="space-y-2">
                                   <h4 className="font-medium text-gray-900">
                                     Features:
                                   </h4>
-                                  {Object.entries(product.features).map(
+                                  {Object.entries(product?.features).map(
                                     ([key, value]) => (
                                       <div key={key} className="flex">
                                         <span className="font-medium min-w-32">
@@ -347,9 +360,9 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
 
                           {tab === "Size & Fit" && (
                             <div className="space-y-4">
-                              {product.specifications && (
+                              {product?.specifications && (
                                 <div className="space-y-2">
-                                  {Object.entries(product.specifications).map(
+                                  {Object.entries(product?.specifications).map(
                                     ([key, value]) => (
                                       <div key={key} className="flex">
                                         <span className="font-medium min-w-32">
@@ -377,7 +390,9 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                                         key={i}
                                         className={`w-5 h-5 ${
                                           i <
-                                          Math.floor(product.averageRating || 0)
+                                          Math.floor(
+                                            product?.averageRating || 0
+                                          )
                                             ? "text-yellow-400 fill-current"
                                             : "text-gray-300"
                                         }`}
@@ -385,17 +400,17 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                                     ))}
                                   </div>
                                   <span className="text-lg font-medium text-gray-900">
-                                    {product.averageRating}
+                                    {product?.averageRating}
                                   </span>
                                 </div>
                                 <span className="text-sm text-gray-600">
-                                  Based on {product.reviewsCount} reviews
+                                  Based on {product?.reviewsCount} reviews
                                 </span>
                               </div>
 
                               {/* Individual Reviews */}
                               <div className="space-y-8">
-                                {product.reviews.map((review) => (
+                                {product?.reviews?.map((review) => (
                                   <div key={review.id} className="space-y-4">
                                     {/* Review Header */}
                                     <div className="flex items-start justify-between">
@@ -465,7 +480,10 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                                     <div className="flex items-center gap-4 pt-2">
                                       <button className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 transition-colors">
                                         <ThumbsUp className="w-3 h-3" />
-                                        Helpful ({review.helpful})
+                                        {/* Helpful ({review?.helpful}) */}
+                                        <span className="text-xs text-gray-600">
+                                          Helpful (0)
+                                        </span>
                                       </button>
                                     </div>
                                   </div>
@@ -475,7 +493,7 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                               {/* View All Reviews Button */}
                               <div className="pt-6 border-t border-gray-100">
                                 <button className="w-full py-3 px-6 border border-gray-300 text-sm font-medium text-gray-900 tracking-wider uppercase hover:bg-gray-50 transition-colors">
-                                  View All {product.reviewsCount} Reviews
+                                  View All {product?.reviewsCount} Reviews
                                 </button>
                               </div>
                             </div>
@@ -499,22 +517,22 @@ const ProductDetails = React.forwardRef<ProductDetailsRef, ProductDetailsProps>(
                                 </p>
                               </div>
 
-                              {product.deliveryInfo && (
+                              {product?.deliveryInfo && (
                                 <div className="space-y-2">
                                   <h4 className="font-medium text-gray-900">
                                     Delivery Information:
                                   </h4>
                                   <p>
                                     •{" "}
-                                    {product.deliveryInfo.free
+                                    {product?.deliveryInfo?.free
                                       ? "Free delivery"
                                       : "Paid delivery"}
                                   </p>
-                                  {product.deliveryInfo.express && (
-                                    <p>• {product.deliveryInfo.express}</p>
+                                  {product?.deliveryInfo?.express && (
+                                    <p>• {product?.deliveryInfo?.express}</p>
                                   )}
-                                  {product.returnPolicy && (
-                                    <p>• {product.returnPolicy}</p>
+                                  {product?.returnPolicy && (
+                                    <p>• {product?.returnPolicy}</p>
                                   )}
                                 </div>
                               )}

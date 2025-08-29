@@ -43,7 +43,13 @@ const MainLayout = () => {
       )}
 
       <main className="flex-1">
-        {isHome ? <Outlet context={{ heroRef }} /> : <Outlet />}
+        {isHome ? (
+          <Outlet context={{ heroRef }} />
+        ) : (
+          <div className="py-8">
+            <Outlet />
+          </div>
+        )}
       </main>
 
       <Footer year={2025} />
