@@ -123,6 +123,29 @@ export interface Product {
 
   isActive: boolean;
   isNew: boolean;
+  // """""""""""""""""SDFGHJ"""""""""
+  badge?: "NEW" | "SALE" | "LIMITED" | "BESTSELLER" | "EXCLUSIVE";
+  sustainability?: {
+    isEcoFriendly?: boolean;
+    certifications?: string[];
+  };
+  shipping?: {
+    freeShipping: boolean;
+    estimatedDays: string;
+    expedited?: boolean;
+  };
+  returns?: {
+    returnWindow: number;
+    freeReturns: boolean;
+  };
+  loyalty?: {
+    pointsEarned?: number;
+    memberDiscount?: number;
+  };
+  giftWrapping?: boolean;
+  personalizable?: boolean;
+  virtualTryOn?: boolean;
+  hasAR?: boolean;
 
   readonly createdAt: Date;
   readonly updatedAt: Date;

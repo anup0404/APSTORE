@@ -17,9 +17,13 @@ const MainLayout = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    // 🔧 FIX: Reset scroll state based on current route
     if (location.pathname !== "/") {
       setIsScrolled(true);
       return;
+    } else {
+      // 🎯 KEY FIX: Reset to false when returning to home page
+      setIsScrolled(false);
     }
 
     const handleScroll = () => {
@@ -27,6 +31,9 @@ const MainLayout = () => {
       const scrollY = window.scrollY;
       setIsScrolled(scrollY > heroHeight);
     };
+
+    // 🔧 FIX: Call handleScroll immediately to set initial state
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -46,7 +53,7 @@ const MainLayout = () => {
         {isHome ? (
           <Outlet context={{ heroRef }} />
         ) : (
-          <div className="py-8">
+          <div className="pt-20">
             <Outlet />
           </div>
         )}

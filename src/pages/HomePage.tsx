@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import FeaturedItems from "../Components/ui/FeaturedItems";
 import HeroSection from "../Components/ui/HeroSection";
 import CategoryGrid from "../Components/ui/CategoryGrid";
 
@@ -24,6 +23,7 @@ import {
   useGetHomeCategoryQuery,
   useGetHomeVideosQuery,
 } from "../store/api/homeApi";
+import ProductGrid from "../Components/ui/ProductGrid";
 
 const Home = React.forwardRef<HTMLDivElement>((_, ref) => {
   const { data: videosData } = useGetHomeVideosQuery();
@@ -60,14 +60,6 @@ const Home = React.forwardRef<HTMLDivElement>((_, ref) => {
     console.log("Sharing product:", id);
   };
 
-  const handleAddToCart = (id: number | string) => {
-    console.log("Added to cart:", id);
-  };
-
-  const handleAddToBag = (id: number | string) => {
-    console.log("Added to bag:", id);
-  };
-
   return (
     <div ref={ref} className="pb-16">
       {/* ✅ Hero Section */}
@@ -98,16 +90,27 @@ const Home = React.forwardRef<HTMLDivElement>((_, ref) => {
       )}
 
       {/* ✅ Product List */}
+
       {featuredItemsProducts.length > 0 && (
-        <FeaturedItems
-          heading={HOME_PRODUCT_CARD_FEATURED_HEADING}
-          subheading={HOME_PRODUCT_CARD_FEATURED_SUBHEADING}
-          products={featuredItemsProducts}
-          onWishlistToggle={handleWishlistToggle}
-          onShare={handleShare}
-          onAddToCart={handleAddToCart}
-          onAddToBag={handleAddToBag}
-        />
+        <section ref={ref} className="py-12 bg-gray-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="font-light text-2xl sm:text-3xl md:text-4xl text-gray-900 tracking-wide">
+                {HOME_PRODUCT_CARD_FEATURED_HEADING}
+              </h2>
+              {HOME_PRODUCT_CARD_FEATURED_SUBHEADING && (
+                <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-gray-600 font-light">
+                  {HOME_PRODUCT_CARD_FEATURED_SUBHEADING}
+                </p>
+              )}
+            </div>
+            <ProductGrid
+              products={featuredItemsProducts}
+              onWishlistToggle={handleWishlistToggle}
+              onShare={handleShare}
+            />
+          </div>
+        </section>
       )}
 
       {/* ✅ Infinite Scroll Loader */}

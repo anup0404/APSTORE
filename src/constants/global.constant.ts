@@ -10,7 +10,6 @@ export const THROTTLE_DELAY = 300;
 export const TABS = [
   "Description",
   "Size & Fit",
-  "Reviews & Ratings",
   "Contact & In-Store Availability",
 ] as const;
 

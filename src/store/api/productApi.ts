@@ -14,6 +14,7 @@ export const productApi = baseApi.injectEndpoints({
         return response.data;
       },
     }),
+
     // createProduct: builder.mutation<Product, Partial<Product>>({
     //   query: (newProduct) => ({
     //     url: "/products",
